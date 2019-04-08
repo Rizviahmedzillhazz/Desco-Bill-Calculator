@@ -1,0 +1,190 @@
+<html>
+
+<head>
+
+    <title>Bill Calculator</title>
+
+    <style>
+
+        form{
+color:rgb(21,134,24);
+font-weight: bold;
+font-size:120%
+}
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: grey;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    color:green;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+
+}
+table#myTable {
+    width: 100%;    
+    background-color:grey;
+}
+th {
+    padding: 15px;
+    text-align: center;
+}
+}
+
+
+        </style>
+
+</head>
+<ul>
+    <li><a class="active" href="#home">Home</a></li>
+    <li><a href="#news">News</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#about">About</a></li>
+</ul>
+
+<body>
+
+    <form>
+
+        Enter Total Unit : <input name="unit" type="text" id="unit">
+        <button onclick="getUnit()" type="button" name="submit" id="submit">Submit</button><br>
+        Your Bill Is : <input name="bill" type="text" id="bill">
+
+
+
+
+        <table id="myTable">
+            <tr>
+                <th>Unit</th>
+                <th>Rate</th>
+                <th>Total</th>
+            </tr>
+
+
+
+        </table>
+
+
+
+
+        <div id="result"></div>
+
+        <script>
+            //let globalVariable;
+            //let local=globalVariable;
+
+            function getUnit() {
+
+                let unitToCalculate = document.getElementById('unit').value;
+                document.getElementById("result").innerHTML = unitToCalculate;
+                var billRanges = { 75: 4.00, 200: 5.45, 300: 5.70, 400: 6.02, 600: 9.30, 601: 10.70 };
+                temp = unitToCalculate;
+                taka = lastkey = 0;
+                let total,total_1,total_2;
+                htmlTableInsert = String('');
+                htmlTableInsert = String(document.getElementById("myTable").innerHTML);
+                for (var key in billRanges) {
+                    range = key - lastkey;
+                    temp = temp - range;
+                        
+                    if (temp > 0) {
+                        taka = (billRanges[key] * range) + taka;
+                        rowdata = tableRow(key, billRanges[key], taka);
+                        total_1=taka;
+                        console.log(rowdata)
+                        htmlTableInsert += rowdata;
+                        /*
+                        htmlTableInsert += ("<tr>");
+                        htmlTableInsert += ("<td>");
+                        htmlTableInsert += (key);
+                        htmlTableInsert += ("</td>");
+                        htmlTableInsert += ("<td>");
+                        htmlTableInsert += (billRanges[key]);
+                        htmlTableInsert += ("</td>");
+                        htmlTableInsert += ("<td>");
+                        htmlTableInsert += (taka);
+                        htmlTableInsert += ("</td>");
+                        htmlTableInsert += ("</tr>");
+                        */
+
+                    } else {
+
+                        rowdata = tableRow(key, billRanges[key], taka);
+                        console.log(rowdata)
+                        htmlTableInsert += rowdata;
+                        taka = (billRanges[key] * (range + temp) + taka);
+                        total_2=taka;
+                        break;
+
+                        /*
+
+                        htmlTableInsert += ("<tr>");
+                        htmlTableInsert += ("<td>");
+                        htmlTableInsert += (key);
+                        htmlTableInsert += ("</td>");
+                        htmlTableInsert += ("<td>");
+                        htmlTableInsert += (billRanges[key]);
+                        htmlTableInsert += ("</td>");
+                        htmlTableInsert += ("<td>");
+                        htmlTableInsert += (taka);
+                        htmlTableInsert += ("</td>");
+                        htmlTableInsert += ("</tr>");
+                        */
+                        break;
+
+                    }
+                    lastkey = key;
+                    
+                }
+                //htmlTableInsert += tableRow('','Your Bill is', taka);
+                
+                console.log("Your Total Bill" + String(htmlTableInsert));
+                document.getElementById("myTable").innerHTML = htmlTableInsert;
+                console.log("Your Total Bill" + taka);
+               
+                
+                //document.getElementById("bill").value=taka;
+
+            };
+            
+            function tableRow(key, rate, taka) {
+              
+                if (temp > 0){
+                    total=range*rate;
+                return "<tr><td>" + range + "</td><td>" + rate + "</td><td>" + total + "</td></tr>";
+                } 
+               else{
+                    
+                    range=temp+range;
+                    total=range*rate;
+                    return "<tr><td>" + range + "</td><td>" + rate + "</td><td>" + total + "</td></tr>";
+                }
+                
+                }
+                
+                
+        </script>
+
+
+
+
+
+
+
+    </form>
+
+
+
+</body>
+
+</html>
